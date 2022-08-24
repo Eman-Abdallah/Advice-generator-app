@@ -36,7 +36,7 @@
         main {
             width: 480px;
             background-color: var(--Dark-Grayish-Blue);
-            height: 300px;
+            height: fit-content;
             margin: 100px auto;
             border-radius: 10px;
             padding: 20px;
@@ -63,7 +63,7 @@
         }
         
         .divider-desktop {
-            padding: 20px auto;
+            padding-bottom: 30px;
         }
         
         .divider {
@@ -117,9 +117,9 @@
 
 <body>
     <main>
-        <h1> Advice # 117</h1>
-        <p>
-            "It is easy to sit up and take notice, what is difficult is getting up and take action."
+        <h1> Advice # <span id="adviceId"></span></h1>
+        <p id="advice">
+
         </p>
         <!-- Advice ID goes here -->
         <div class="divider-desktop">
@@ -140,6 +140,39 @@
     <footer class="attribution">
         Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. Coded by <a href="https://www.frontendmentor.io/profile/Eman-Abdallah">Eman Shaltoot</a>.
     </footer>
+
+    <script>
+        // const http = new XMLHttpRequest()
+
+        // http.open("GET", "https://api.adviceslip.com/advice")
+        // http.send()
+
+        // http.onload = () => console.log(http.response.toString())
+        let adviceId = document.getElementById("adviceId")
+        let advice = document.getElementById("advice")
+        var request = new XMLHttpRequest()
+
+        // Open a new connection, using the GET request on the URL endpoint
+        request.open('GET', 'https://api.adviceslip.com/advice', true)
+
+        request.onload = function() {
+            // Begin accessing JSON data here
+            fetch('https://api.adviceslip.com/advice')
+                .then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log(data.slip.id)
+                    console.log(data.slip.advice)
+                    adviceId.innerText = data.slip.id
+                    advice.innerText = data.slip.advice
+                })
+
+        }
+
+        // Send request
+        request.send()
+    </script>
 </body>
 
 </html>
